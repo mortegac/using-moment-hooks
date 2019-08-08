@@ -1,26 +1,54 @@
-import React from 'react';
+/* eslint-disable react/jsx-no-comment-textnodes */
+import React,{useState, useEffect } from 'react';
+import moment from 'moment';
+
 import logo from './logo.svg';
 import './App.css';
 
-function App() {
+
+
+const App = (props) => {
+  const [date, setDate] = useState(new Date());
+  
+  //Reemplaza ciclo de viuda componentDidMount y componentWillUnmount
+  useEffect(() => {
+
+    // Seteo un timer que se ejecute cada 1 segundo
+    var setTimer = setInterval( () => tick(), 1000 );
+   
+    return function cleanup() {
+        clearInterval(setTimer);
+      };
+   });
+   
+
+  //Obtengo la fecha Actual
+  function tick() {
+    setDate(new Date());
+  }
+
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
+        <br />
         <a
           className="App-link"
-          href="https://reactjs.org"
+          href="https://momentjs.com/docs/"
           target="_blank"
           rel="noopener noreferrer"
         >
-          Learn React
+          Documentación de Momentjs
         </a>
+        <h2>{date.toLocaleTimeString()}</h2>
+        <span>sin moment:</span>
+        <h6>sin moment: {date.toString()}</h6>
+        <span>con moment:</span>
+        <h6>con moment: {moment(date.toString()).format('DD MMM YYYY')}</h6>
       </header>
     </div>
-  );
-}
+  )
+};
+
 
 export default App;
